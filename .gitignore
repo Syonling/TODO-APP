@@ -1,0 +1,20 @@
+# ===== 通用 =====
+.DS_Store
+# .env
+# .env.*
+*.log
+
+# ===== Python / Backend =====
+__pycache__/
+*.py[cod]
+*.sqlite3
+.venv/
+venv/
+
+# ===== Node / Frontend =====
+node_modules/
+build/
+dist/
+
+# ===== Docker =====
+postgres_data/
