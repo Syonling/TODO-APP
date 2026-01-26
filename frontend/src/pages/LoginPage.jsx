@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { login } from '../services/api';
+import { designConfig as ds } from '../styles/design-config';  
+
 
 function LoginPage({ onLoginSuccess, onNavigateRegister, onBack }) {
     const [username, setUsername] = useState('');
@@ -49,22 +51,42 @@ function LoginPage({ onLoginSuccess, onNavigateRegister, onBack }) {
     };
 
     return (
-        <div style={{ padding: '50px', maxWidth: '400px', margin: '0 auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+        <div style={{ 
+            padding: ds.container.padding, 
+            maxWidth: ds.container.small, 
+            margin: '0 auto' 
+        }}>
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center', 
+                marginBottom: ds.spacing.xl 
+            }}>
                 <h1>ログイン</h1>
-                <button onClick={onBack} style={{ padding: '8px 16px', backgroundColor: '#eee', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                <button 
+                    onClick={onBack} 
+                    style={{
+                        padding: ds.button.small.padding,
+                        fontSize: ds.button.small.fontSize,
+                        backgroundColor: ds.button.small.bg,
+                        color: ds.button.small.color,
+                        border: 'none',
+                        borderRadius: ds.button.small.borderRadius,
+                        cursor: 'pointer'
+                    }}
+                >
                     戻る
                 </button>
             </div>
 
             {message && (
-                <div style={{ 
-                    padding: '10px', 
-                    marginBottom: '15px', 
-                    backgroundColor: '#ffebee',
-                    border: '1px solid #ef5350',
-                    borderRadius: '4px',
-                    color: '#c62828'
+                <div style={{
+                    padding: ds.alert.error.padding,
+                    marginBottom: ds.spacing.md,
+                    backgroundColor: ds.alert.error.bg,
+                    border: `1px solid ${ds.alert.error.border}`,
+                    borderRadius: ds.alert.error.borderRadius,
+                    color: ds.alert.error.color
                 }}>
                     {message}
                 </div>
@@ -76,31 +98,66 @@ function LoginPage({ onLoginSuccess, onNavigateRegister, onBack }) {
                     placeholder="ユーザー名"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    style={{ display: 'block', width: '100%', padding: '10px', marginBottom: '10px', fontSize: '16px', border: '1px solid #ddd', borderRadius: '4px' }}
+                    style={{
+                        display: 'block',
+                        width: '100%',
+                        padding: ds.input.padding,
+                        marginBottom: ds.spacing.sm,
+                        fontSize: ds.input.fontSize,
+                        border: `1px solid ${ds.input.borderColor}`,
+                        borderRadius: ds.input.borderRadius
+                    }}
                 />
                 <input
                     type="password"
                     placeholder="パスワード"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    style={{ display: 'block', width: '100%', padding: '10px', marginBottom: '20px', fontSize: '16px', border: '1px solid #ddd', borderRadius: '4px' }}
+                    style={{
+                        display: 'block',
+                        width: '100%',
+                        padding: ds.input.padding,
+                        marginBottom: ds.spacing.lg,
+                        fontSize: ds.input.fontSize,
+                        border: `1px solid ${ds.input.borderColor}`,
+                        borderRadius: ds.input.borderRadius
+                    }}
                 />
                 <button 
                     onClick={handleSubmit}
                     type="button" 
-                    style={{ padding: '12px 20px', width: '100%', backgroundColor: '#2196F3', color: 'white', border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer', fontWeight: 'bold' }}
+                    style={{
+                        width: '100%',
+                        padding: ds.button.primary.padding,
+                        fontSize: ds.button.primary.fontSize,
+                        backgroundColor: ds.button.primary.bg,
+                        color: ds.button.primary.color,
+                        border: 'none',
+                        borderRadius: ds.button.primary.borderRadius,
+                        cursor: 'pointer',
+                        fontWeight: 'bold'
+                    }}
                 >
                     ログイン
                 </button>
             </div>
 
-            <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                <p style={{ color: '#666', fontSize: '14px' }}>
+            <div style={{ marginTop: ds.spacing.lg, textAlign: 'center' }}>
+                <p style={{ color: ds.colors.textSecondary, fontSize: '14px' }}>
                     アカウントをお持ちでない方
                 </p>
                 <button 
                     onClick={onNavigateRegister}
-                    style={{ padding: '10px', width: '100%', background: '#f5f5f5', border: '1px solid #ddd', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}
+                    style={{
+                        width: '100%',
+                        padding: ds.spacing.sm,
+                        backgroundColor: ds.colors.grey100,
+                        color: ds.colors.textPrimary,
+                        border: `1px solid ${ds.colors.grey300}`,
+                        borderRadius: ds.input.borderRadius,
+                        cursor: 'pointer',
+                        fontSize: '14px'
+                    }}
                 >
                     新規登録はこちら
                 </button>

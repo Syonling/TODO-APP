@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 
 services:
   db:
@@ -16,7 +16,7 @@ services:
       retries: 5
 
   backend:
-    build: ./backend
+    image: ghcr.io/syonling/todo-app-backend:latest
     ports:
       - "8000:8000"
     environment:
@@ -28,7 +28,7 @@ services:
         condition: service_healthy
 
   frontend:
-    build: ./frontend
+    image: ghcr.io/syonling/todo-app-frontend:latest
     ports:
       - "3001:80"
     depends_on:

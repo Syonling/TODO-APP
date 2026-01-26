@@ -16,7 +16,7 @@ services:
       retries: 5
 
   backend:
-    image: ./backend
+    build: ./backend
     ports:
       - "8000:8000"
     environment:
@@ -28,7 +28,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: ./frontend
+    build: ./frontend
     ports:
       - "3001:80"
     depends_on:
