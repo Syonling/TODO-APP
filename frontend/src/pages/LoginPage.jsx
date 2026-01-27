@@ -52,6 +52,7 @@ function LoginPage({ onLoginSuccess, onNavigateRegister, onBack }) {
 
     return (
         <div style={{ 
+            fontFamily: ds.fonts.base,
             padding: ds.container.padding, 
             maxWidth: ds.container.small, 
             margin: '0 auto' 

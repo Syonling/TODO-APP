@@ -48,16 +48,25 @@ export const designConfig = {
       bg: '#f44336',
       hoverBg: '#d32f2f',
       color: '#ffffff',
-      padding: '8px 16px',
+      padding: '12px 16px',
       fontSize: '14px',
       borderRadius: '4px'
-    }
+    },
+    user: {
+      bg: '#f5f5f5',
+      hoverBg: '#e0e0e0',
+      color: '#212121',
+      padding: '10px 16px',
+      fontSize: '14px',
+      borderRadius: '4px'
+    },
   },
   
   // 输入框
   input: {
     padding: '10px 12px',
     fontSize: '16px',
+    editFontSize: '16px',    // 编辑模式字体
     borderColor: '#e0e0e0',
     borderRadius: '4px',
     focusBorderColor: '#2196F3'
@@ -96,19 +105,56 @@ export const designConfig = {
     borderColor: '#ddd',
     borderLeftWidth: '4px',
     completedBg: '#f0f0f0',
-    normalBg: '#ffffff' ,
-    fontSize: '16px',              // ← 添加：Todo标题字体大小
-    metaFontSize: '14px' ,           // ← 添加：期限/优先度字体大小
-    addFormBg: '#f5f5f5'  // ← 添加表单背景色
+    normalBg: '#ffffff',
+    fontSize: '18px',
+    metaFontSize: '14px',
+    addFormBg: '#f5f5f5'
+  },
+
+  // 统计信息
+  stats: {
+    bg: '#e3f2fd',
+    border: '#2196F3',
+    textColor: '#1565c0',
+    fontSize: '14px',
+    padding: '10px 16px',
+    borderRadius: '6px',
+    iconTotal: '📊',
+    iconCompleted: '✅',
+    iconPending: '⏳'
+  },
+  
+  // 下拉菜单
+  dropdown: {
+    bg: '#ffffff',
+    border: '#e0e0e0',
+    shadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    borderRadius: '6px',
+    itemPadding: '10px 16px',
+    itemHoverBg: '#f5f5f5',
+    fontSize: '14px',
+    minWidth: '150px'
+  },
+  
+  // 确认弹窗
+  modal: {
+    overlayBg: 'rgba(0, 0, 0, 0.5)',
+    bg: '#ffffff',
+    borderRadius: '8px',
+    padding: '24px',
+    shadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+    titleSize: '18px',
+    contentSize: '15px',
+    maxWidth: '400px'
   },
   
   // 优先度颜色
   priority: {
-    1: '#88ccff',
-    2: '#88dd88',
-    3: '#ffbb44',
-    4: '#ff8844',
-    5: '#ff4444'
+    1: '#efeec6',
+    2: '#ecaeb9',
+    3: '#d85b72',
+    // 4: '#ff8844',
+    // 5: '#ff4444'
   },
   
   // 间距
@@ -120,15 +166,17 @@ export const designConfig = {
     xl: '30px'
   },
   
-  // 图标（可选）
+  // 图标
   icons: {
     edit: '✎',
     delete: '🗑',
     save: '✓',
     cancel: '✕',
     user: '👤',
-    logout: '→'
-  }
+    logout: '🚪',
+    dropdown: '▼',
+    settings: '⚙️'
+  },
   // icons: {
   //   edit: '/icons/edit.png',
   //   delete: '/icons/delete.png',
@@ -137,4 +185,8 @@ export const designConfig = {
   //   user: '/icons/user.png',
   //   logout: '/icons/logout.png'
   // }
+
+  fonts: {
+    base: '"Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif'
+  }
 };

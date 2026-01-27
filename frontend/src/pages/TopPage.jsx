@@ -4,6 +4,7 @@ import { designConfig as ds } from '../styles/design-config';
 function TopPage({ onNavigateLogin, onNavigateRegister }) {
     return (
         <div style={{ 
+            fontFamily: ds.fonts.base,
             padding: ds.container.padding, 
             maxWidth: ds.container.medium, 
             margin: '0 auto',

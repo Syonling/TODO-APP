@@ -4,8 +4,8 @@ import { designConfig as ds } from '../styles/design-config';
 
 function UserPage({ onBack }) {
     const [currentUsername, setCurrentUsername] = useState('');
-    const [newUsername, setNewUsername] = useState('');
-    const [newPassword, setNewPassword] = useState('');
+    const [newUsername, setNewUsername] = useState('');      // ← 保持空白
+    const [newPassword, setNewPassword] = useState('');      // ← 保持空白
     const [message, setMessage] = useState('');
 
     useEffect(() => {
@@ -16,9 +16,9 @@ function UserPage({ onBack }) {
         try {
             const response = await getCurrentUser();
             setCurrentUsername(response.data.username);
-            // setNewUsername(response.data.username);
+            // 不设置 newUsername，让输入框保持空白
         } catch (error) {
-            console.error('加载失败:', error);
+            console.error('読み込み失敗', error);
         }
     };
 
@@ -26,29 +26,40 @@ function UserPage({ onBack }) {
         e.preventDefault();
         setMessage('');
 
-        const usernameChanged = newUsername !== currentUsername;
-        const passwordChanged = newPassword.trim().length > 0;
+        // 判断是否有输入内容
+        const hasNewUsername = newUsername.trim().length > 0;
+        const hasNewPassword = newPassword.trim().length > 0;
         
-        if (!usernameChanged && !passwordChanged) {
-            setMessage('没有修改任何信息');
+        // 前端基础验证
+        if (!hasNewUsername && !hasNewPassword) {
+            setMessage('変更する内容を入力してください');
             return;
-        }        
+        }
 
         try {
             await updateUser(
-                usernameChanged ? newUsername : null,
-                passwordChanged ? newPassword : null
+                hasNewUsername ? newUsername.trim() : null,
+                hasNewPassword ? newPassword : null
             );
-            setMessage('更新成功！');
-            setNewPassword('');
+            setMessage('更新しました！');
+            setNewUsername('');  // 清空输入框
+            setNewPassword('');  // 清空输入框
             loadUserInfo();
         } catch (error) {
-            setMessage(error.response?.data?.detail || '更新失败');
+            // 显示后端返回的详细错误信息
+            if (error.response?.data?.detail) {
+                setMessage(error.response.data.detail);
+            } else if (error.request) {
+                setMessage('サーバーに接続できません');
+            } else {
+                setMessage('更新に失敗しました');
+            }
         }
     };
 
     return (
         <div style={{ 
+            fontFamily: ds.fonts.base,
             padding: ds.container.padding, 
             maxWidth: '500px', 
             margin: '0 auto' 
@@ -59,7 +70,7 @@ function UserPage({ onBack }) {
                 alignItems: 'center', 
                 marginBottom: ds.spacing.xl 
             }}>
-                <h1>用户信息</h1>
+                <h1>ユーザー情報</h1>
                 <button 
                     onClick={onBack} 
                     style={{ 
@@ -72,7 +83,7 @@ function UserPage({ onBack }) {
                         fontSize: ds.button.small.fontSize
                     }}
                 >
-                    返回
+                    戻る
                 </button>
             </div>
 
@@ -97,7 +108,7 @@ function UserPage({ onBack }) {
                         color: ds.colors.textPrimary,
                         fontWeight: '500'
                     }}>
-                        当前用户名
+                        現在のユーザー名
                     </label>
                     <input
                         type="text"
@@ -122,12 +133,13 @@ function UserPage({ onBack }) {
                         color: ds.colors.textPrimary,
                         fontWeight: '500'
                     }}>
-                        新用户名
+                        新しいユーザー名（未入力の場合は変更されません））
                     </label>
                     <input
                         type="text"
                         value={newUsername}
                         onChange={(e) => setNewUsername(e.target.value)}
+                        placeholder="新しいユーザー名を入力してください"
                         style={{ 
                             width: '100%', 
                             padding: ds.input.padding,
@@ -145,13 +157,13 @@ function UserPage({ onBack }) {
                         color: ds.colors.textPrimary,
                         fontWeight: '500'
                     }}>
-                        新密码（留空则不修改）
+                        新しいパスワード（未入力の場合は変更されません）
                     </label>
                     <input
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="8位以上，含字母和数字"
+                        placeholder="パスワード（8文字以上、英数字を含む）"
                         style={{ 
                             width: '100%', 
                             padding: ds.input.padding,
@@ -176,7 +188,7 @@ function UserPage({ onBack }) {
                         fontWeight: 'bold'
                     }}
                 >
-                    更新信息
+                    更新
                 </button>
             </form>
         </div>

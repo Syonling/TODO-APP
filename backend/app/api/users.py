@@ -49,6 +49,8 @@ def update_user(
 ):
     """更新当前用户信息"""
     has_changes = False
+    
+    # 更新用户名
     if user_update.username:
         # 检查是否真的修改了用户名
         if user_update.username == current_user.username:
@@ -64,7 +66,12 @@ def update_user(
             current_user.username = user_update.username
             has_changes = True
     
+    # 更新密码
     if user_update.password:
+        # ← 关键新增：检查新密码是否和旧密码相同
+        if verify_password(user_update.password, current_user.password_hash):
+            raise HTTPException(status_code=400, detail="新密码与当前密码相同，无需修改")
+        
         current_user.password_hash = get_password_hash(user_update.password)
         has_changes = True
     
