@@ -1,24 +1,34 @@
-// 开发者设计配置 - 在这里修改所有样式
+// CSSスタイル
+
+import { 
+  FiEdit2,
+  FiTrash2,
+  FiCheck,
+  FiX,
+  FiUser,
+  FiLogOut,
+  FiChevronDown,
+  FiSettings
+} from 'react-icons/fi';
+
 export const designConfig = {
   
-  // 颜色
   colors: {
-    primary: '#2196F3',           // 主按钮、链接
-    primaryHover: '#1976D2',      // 主按钮悬停
-    secondary: '#4CAF50',         // 次要按钮、成功
+    primary: '#2196F3',           
+    primaryHover: '#1976D2',      
+    secondary: '#4CAF50',         
     secondaryHover: '#388E3C',    
-    error: '#f44336',             // 错误、删除按钮
-    errorLight: '#ffebee',        // 错误提示背景
+    error: '#f44336',             
+    errorLight: '#ffebee',        
     success: '#4caf50',
     successLight: '#e8f5e9',
-    grey100: '#f5f5f5',           // 次要按钮背景
-    grey300: '#e0e0e0',           // 边框
-    textPrimary: '#212121',       // 主文字
-    textSecondary: '#666666',     // 次要文字
-    bgDefault: '#fafafa',         // 页面背景
+    grey100: '#f5f5f5',           
+    grey300: '#e0e0e0',           
+    textPrimary: '#212121',       
+    textSecondary: '#666666',     
+    bgDefault: '#fafafa',         
   },
   
-  // 按钮
   button: {
     primary: {
       bg: '#2196F3',
@@ -48,7 +58,7 @@ export const designConfig = {
       bg: '#f44336',
       hoverBg: '#d32f2f',
       color: '#ffffff',
-      padding: '12px 16px',
+      padding: '12px 20px',
       fontSize: '14px',
       borderRadius: '4px'
     },
@@ -62,25 +72,22 @@ export const designConfig = {
     },
   },
   
-  // 输入框
   input: {
     padding: '10px 12px',
     fontSize: '16px',
-    editFontSize: '16px',    // 编辑模式字体
+    editFontSize: '16px',
     borderColor: '#e0e0e0',
     borderRadius: '4px',
     focusBorderColor: '#2196F3'
   },
   
-  // 对话框/容器
   container: {
-    small: '400px',    // 登录、注册页
+    small: '400px',    
     medium: '600px',   
-    large: '800px',    // Todo页
+    large: '800px',    
     padding: '50px'
   },
   
-  // 消息提示框
   alert: {
     error: {
       bg: '#ffebee',
@@ -98,7 +105,6 @@ export const designConfig = {
     }
   },
   
-  // Todo卡片
   todoCard: {
     padding: '15px',
     borderRadius: '8px',
@@ -111,7 +117,7 @@ export const designConfig = {
     addFormBg: '#f5f5f5'
   },
 
-  // 统计信息
+
   stats: {
     bg: '#e3f2fd',
     border: '#2196F3',
@@ -119,12 +125,8 @@ export const designConfig = {
     fontSize: '14px',
     padding: '10px 16px',
     borderRadius: '6px',
-    iconTotal: '📊',
-    iconCompleted: '✅',
-    iconPending: '⏳'
   },
   
-  // 下拉菜单
   dropdown: {
     bg: '#ffffff',
     border: '#e0e0e0',
@@ -136,7 +138,6 @@ export const designConfig = {
     minWidth: '150px'
   },
   
-  // 确认弹窗
   modal: {
     overlayBg: 'rgba(0, 0, 0, 0.5)',
     bg: '#ffffff',
@@ -148,7 +149,6 @@ export const designConfig = {
     maxWidth: '400px'
   },
   
-  // 优先度颜色
   priority: {
     1: '#efeec6',
     2: '#ecaeb9',
@@ -157,7 +157,6 @@ export const designConfig = {
     // 5: '#ff4444'
   },
   
-  // 间距
   spacing: {
     xs: '5px',
     sm: '10px',
@@ -166,25 +165,16 @@ export const designConfig = {
     xl: '30px'
   },
   
-  // 图标
   icons: {
-    edit: '✎',
-    delete: '🗑',
-    save: '✓',
-    cancel: '✕',
-    user: '👤',
-    logout: '🚪',
-    dropdown: '▼',
-    settings: '⚙️'
+    edit: FiEdit2,
+    delete: FiTrash2,
+    save: FiCheck,
+    cancel: FiX,
+    user: FiUser,
+    logout: FiLogOut,
+    dropdown: FiChevronDown,
+    settings: FiSettings
   },
-  // icons: {
-  //   edit: '/icons/edit.png',
-  //   delete: '/icons/delete.png',
-  //   save: '/icons/save.png',
-  //   cancel: '/icons/cancel.png',
-  //   user: '/icons/user.png',
-  //   logout: '/icons/logout.png'
-  // }
 
   fonts: {
     base: '"Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif'

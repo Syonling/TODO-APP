@@ -24,9 +24,7 @@ function LoginPage({ onLoginSuccess, onNavigateRegister, onBack }) {
             console.error('Login error:', error);
             
             if (error.response) {
-                // 处理不同类型的错误响应
                 if (error.response.status === 422) {
-                    // Pydantic验证错误
                     const detail = error.response.data?.detail;
                     if (Array.isArray(detail) && detail.length > 0) {
                         setMessage(detail[0].msg || '入力エラー');
@@ -36,10 +34,8 @@ function LoginPage({ onLoginSuccess, onNavigateRegister, onBack }) {
                         setMessage('入力形式が正しくありません');
                     }
                 } else if (error.response.status === 401) {
-                    // 认证失败
                     setMessage('ユーザー名またはパスワードが間違っています');
                 } else {
-                    // 其他错误
                     setMessage(error.response.data?.detail || 'ログインに失敗しました');
                 }
             } else if (error.request) {

@@ -1,5 +1,5 @@
 """
-数据库连接配置
+データベース接続構成
 FastAPI + SQLAlchemy
 """
 from sqlalchemy import create_engine
@@ -8,12 +8,12 @@ from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 
 engine = create_engine(settings.DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) #创建 SessionLocal 作为数据库会话工厂
-Base = declarative_base()   #定义 ORM 基类 Base
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) 
+Base = declarative_base()   
 
 def get_db():
     db = SessionLocal()
     try:
-        yield db       #每个请求分配一个 Session
+        yield db 
     finally:
         db.close()

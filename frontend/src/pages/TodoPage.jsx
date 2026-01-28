@@ -6,14 +6,13 @@ function TodoPage({ onLogout, onNavigateUser }) {
     const [todos, setTodos] = useState([]);
     const [newTitle, setNewTitle] = useState('');
     const [newDueDate, setNewDueDate] = useState('');
-    const [newPriority, setNewPriority] = useState(2);  // 默认中优先度
+    const [newPriority, setNewPriority] = useState(2);  // デフォルトは中優先度
     const [sortBy, setSortBy] = useState('');
     const [editingId, setEditingId] = useState(null);
     const [editTitle, setEditTitle] = useState('');
     const [editDueDate, setEditDueDate] = useState('');
-    const [editPriority, setEditPriority] = useState(2);  // 默认中优先度
+    const [editPriority, setEditPriority] = useState(2);  // デフォルトは中優先度
     
-    // 下拉菜单和弹窗状态
     const [showDropdown, setShowDropdown] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
@@ -36,54 +35,54 @@ function TodoPage({ onLogout, onNavigateUser }) {
             
             const response = await getTodos(sort, order);
             
-            // 前端排序：未完成在前，已完成在后
+            // フロントエンドのソート: 未完了の項目を先頭に、完了した項目を最後尾に表示
             let sortedTodos = response.data.sort((a, b) => {
                 if (a.completed === b.completed) return 0;
                 return a.completed ? 1 : -1;
             });
             
-            // 二级排序
+            
             if (sortBy === 'priority') {
-                // 按优先度排序时：相同优先度的按日期从近到远
+                // 優先順位で並べ替え
                 sortedTodos = sortedTodos.sort((a, b) => {
-                    // 先按完成状态排序
+                    // 完了ステータスで並べ替え
                     if (a.completed !== b.completed) {
                         return a.completed ? 1 : -1;
                     }
-                    // 再按优先度从高到低（3→1）
+                    // 高から低の順に優先順位
                     if (a.priority !== b.priority) {
                         return b.priority - a.priority;
                     }
-                    // 优先度相同时，按日期从近到远
+                    // 優先度が同じ場合は、日付順
                     return new Date(a.due_date) - new Date(b.due_date);
                 });
             } else if (sortBy === 'date') {
-                // 按日期排序时：相同日期的按优先度从高到低
+                // 日付で並べ替える場合
                 sortedTodos = sortedTodos.sort((a, b) => {
-                    // 先按完成状态排序
+                    // 完了ステータスで並べ替え
                     if (a.completed !== b.completed) {
                         return a.completed ? 1 : -1;
                     }
-                    // 再按日期从近到远
+                    // 日付順
                     const dateA = new Date(a.due_date);
                     const dateB = new Date(b.due_date);
                     if (dateA.getTime() !== dateB.getTime()) {
                         return dateA - dateB;
                     }
-                    // 日期相同时，按优先度从高到低（3→1）
+                    // 日付が同じ場合は、高から低の順に優先順位を付けます
                     return b.priority - a.priority;
                 });
             }
             
             setTodos(sortedTodos);
         } catch (error) {
-            console.error('加载失败:', error);
+            console.error('読み込みに失敗しました:', error);
         }
     };
 
     const handleAdd = async () => {
         if (!newTitle.trim() || !newDueDate) {
-            alert('请填写标题和期限');
+            alert('タイトルと締め切りをご記入ください');
             return;
         }
         try {
@@ -93,7 +92,7 @@ function TodoPage({ onLogout, onNavigateUser }) {
             setNewPriority(2);
             loadTodos();
         } catch (error) {
-            alert(error.response?.data?.detail || '添加失败');
+            alert(error.response?.data?.detail || '追加に失敗しました');
         }
     };
 
@@ -110,7 +109,7 @@ function TodoPage({ onLogout, onNavigateUser }) {
             setEditingId(null);
             loadTodos();
         } catch (error) {
-            alert(error.response?.data?.detail || '更新失败');
+            alert(error.response?.data?.detail || '更新に失敗しました');
         }
     };
 
@@ -119,21 +118,20 @@ function TodoPage({ onLogout, onNavigateUser }) {
             await toggleTodo(id);
             loadTodos();
         } catch (error) {
-            console.error('切换失败:', error);
+            console.error('切り替えに失敗しました:', error);
         }
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm('确定要删除吗？')) return;
+        if (!window.confirm('本当に削除しますか?')) return;
         try {
             await deleteTodo(id);
             loadTodos();
         } catch (error) {
-            console.error('删除失败:', error);
+            console.error('削除に失敗しました:', error);
         }
     };
 
-    // 处理登出
     const handleLogoutClick = () => {
         setShowDropdown(false);
         setShowLogoutModal(true);
@@ -169,7 +167,6 @@ function TodoPage({ onLogout, onNavigateUser }) {
             }}>
                 <h1>ToDo アプリ</h1>
                 
-                {/* 用户下拉菜单 */}
                 <div style={{ position: 'relative' }}>
                     <button 
                         onClick={() => setShowDropdown(!showDropdown)}
@@ -186,14 +183,11 @@ function TodoPage({ onLogout, onNavigateUser }) {
                             gap: '6px'
                         }}
                     >
-                        {ds.icons.user} 
-                        {/* 用户 {ds.icons.dropdown} */}
+                        <ds.icons.user size={20} />
                     </button>
                     
-                    {/* 下拉菜单内容 */}
                     {showDropdown && (
                         <>
-                            {/* 点击外部关闭下拉菜单 */}
                             <div 
                                 style={{
                                     position: 'fixed',
@@ -276,7 +270,6 @@ function TodoPage({ onLogout, onNavigateUser }) {
                 </div>
             </div>
 
-            {/* 排序 + 统计（同一行） */}
             <div
                 style={{
                     display: 'flex',
@@ -285,7 +278,6 @@ function TodoPage({ onLogout, onNavigateUser }) {
                     marginBottom: ds.spacing.md
                 }}
             >
-                {/* 左侧：排序 */}
                 <div>
                     <label>並び替え：</label>
                     <select 
@@ -305,7 +297,6 @@ function TodoPage({ onLogout, onNavigateUser }) {
                     </select>
                 </div>
 
-                {/* 右侧：统计信息 */}
                 <div
                     style={{
                         textAlign: 'right',
@@ -320,7 +311,6 @@ function TodoPage({ onLogout, onNavigateUser }) {
                 </div>
             </div>
 
-            {/* 添加表单 */}
             <div style={{ 
                 marginBottom: ds.spacing.lg, 
                 padding: ds.spacing.md, 
@@ -391,7 +381,6 @@ function TodoPage({ onLogout, onNavigateUser }) {
                 </button>
             </div>
             
-            {/* Todo列表 */}
             <div>
                 {todos.map(todo => (
                     <div key={todo.id} style={{
@@ -403,7 +392,6 @@ function TodoPage({ onLogout, onNavigateUser }) {
                         borderLeft: `${ds.todoCard.borderLeftWidth} solid ${ds.priority[todo.priority]}`
                     }}>
                         {editingId === todo.id ? (
-                            // 编辑模式
                             <div>
                                 <div style={{ 
                                     display: 'grid', 
@@ -461,7 +449,7 @@ function TodoPage({ onLogout, onNavigateUser }) {
                                         fontSize: ds.button.secondary.fontSize
                                     }}
                                 >
-                                    {ds.icons.save} 保存
+                                    <ds.icons.save size={16} /> 保存
                                 </button>
                                 <button 
                                     onClick={() => setEditingId(null)} 
@@ -475,11 +463,11 @@ function TodoPage({ onLogout, onNavigateUser }) {
                                         fontSize: ds.button.secondary.fontSize
                                     }}
                                 >
-                                    {ds.icons.cancel} キャンセル
+                                    <ds.icons.cancel size={16} /> キャンセル
                                 </button>
                             </div>
                         ) : (
-                            // 显示模式
+                            
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <div style={{ flex: 1 }}>
                                     <input
@@ -518,7 +506,7 @@ function TodoPage({ onLogout, onNavigateUser }) {
                                             fontSize: '14px'
                                         }}
                                     >
-                                        {ds.icons.edit}
+                                        <ds.icons.edit size={16} style={{ verticalAlign: 'middle' }} />
                                     </button>
                                     <button 
                                         onClick={() => handleDelete(todo.id)} 
@@ -532,7 +520,7 @@ function TodoPage({ onLogout, onNavigateUser }) {
                                             fontSize: ds.button.danger.fontSize
                                         }}
                                     >
-                                        {ds.icons.delete}
+                                        <ds.icons.delete size={16} style={{ verticalAlign: 'middle' }} />
                                     </button>
                                 </div>
                             </div>
@@ -541,7 +529,6 @@ function TodoPage({ onLogout, onNavigateUser }) {
                 ))}
             </div>
             
-            {/* 登出确认弹窗 */}
             {showLogoutModal && (
                 <div style={{
                     position: 'fixed',

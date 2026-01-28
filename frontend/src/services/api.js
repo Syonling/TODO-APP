@@ -5,7 +5,7 @@ const api = axios.create({
     headers: { 'Content-Type': 'application/json' }
 });
 
-// 请求拦截器：添加token
+// リクエストインターセプター: トークンの追加
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
@@ -19,20 +19,15 @@ api.interceptors.request.use(
     }
 );
 
-// 响应拦截器：处理401错误
+// レスポンスインターセプター: 401エラーの処理
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        // 只有在以下情况才自动登出并刷新：
-        // 1. 收到401错误
-        // 2. 当前有token（说明之前是登录状态）
-        // 3. 不是登录或注册接口（这些接口的401是正常的）
         if (error.response && error.response.status === 401) {
             const token = localStorage.getItem('token');
             const isAuthEndpoint = error.config.url.includes('/login') || 
                                   error.config.url.includes('/register');
             
-            // 只有token存在且不是认证接口时才自动登出
             if (token && !isAuthEndpoint) {
                 localStorage.removeItem('token');
                 window.location.reload();
@@ -42,8 +37,8 @@ api.interceptors.response.use(
     }
 );
 
-//封装所有 API 调用
-// ===== 用户相关 =====
+
+// ===== ユーザーについて =====
 export const register = (username, password) => 
     api.post('/api/users/register', { username, password });
 
@@ -60,7 +55,7 @@ export const updateUser = (username, password) => {
     return api.put('/api/users/me', data);
 };
 
-// ===== Todo相关 =====
+// ===== Todoについて =====
 export const getTodos = (sort, order = 'asc') => {
     const params = {};
     if (sort) params.sort = sort;

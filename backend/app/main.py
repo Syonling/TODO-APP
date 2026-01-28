@@ -4,8 +4,7 @@ from app.database import engine, Base
 from app.api import users, todos
 from app.core.config import settings
 
-Base.metadata.create_all(bind=engine)   #启动时自动建表
-#服务启动时根据 models.py 的 ORM 定义创建表（如果不存在）。
+Base.metadata.create_all(bind=engine)   #起動時の自動テーブル作成
 
 app = FastAPI(title="Todo API")
 
@@ -17,9 +16,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(users.router)        #注册路由
+app.include_router(users.router)
 app.include_router(todos.router)
 
 @app.get("/")
 def root():
-    return {"message": "API运行中"}
+    return {"message": "APIが実行中"}

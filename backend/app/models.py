@@ -1,5 +1,5 @@
 """
-定义users和todos表结构
+ユーザー と ToDo テーブルの構造を定義
 """
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date, DateTime
 from sqlalchemy.orm import relationship
@@ -10,24 +10,24 @@ class User(Base):
     __tablename__ = "users"
     
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(50), unique=True, index=True)  #username 唯一 + 索引  DB 层保证
-    password_hash = Column(String(255)) #保存哈希值 密码暗号化保持
+    username = Column(String(50), unique=True, index=True)
+    password_hash = Column(String(255))
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
         
 
-    todos = relationship("Todo", back_populates="owner", cascade="all, delete-orphan") #一对多关系，删除用户会级联删除 ToDo
+    todos = relationship("Todo", back_populates="owner", cascade="all, delete-orphan")
 
 class Todo(Base):
     __tablename__ = "todos"
     
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))   #user_id 外键
+    user_id = Column(Integer, ForeignKey("users.id")) 
     title = Column(String(200))
-    due_date = Column(Date, nullable=False)  # 新增：期日
-    priority = Column(Integer, nullable=False)  # 新增：优先度（1-5）
+    due_date = Column(Date, nullable=False)
+    priority = Column(Integer, nullable=False)
     completed = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
         
-    owner = relationship("User", back_populates="todos")    #owner 回到 User
+    owner = relationship("User", back_populates="todos")

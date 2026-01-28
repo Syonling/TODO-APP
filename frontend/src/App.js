@@ -28,7 +28,6 @@ function App() {
         setCurrentPage('todo');
     };
 
-    // 未登录状态的页面路由
     if (!isLoggedIn) {
         if (currentPage === 'login') {
             return (
@@ -50,7 +49,7 @@ function App() {
             );
         }
 
-        // 默认显示Top页面
+        // デフォルトではトップページが表示
         return (
             <TopPage 
                 onNavigateLogin={() => setCurrentPage('login')}
@@ -59,7 +58,6 @@ function App() {
         );
     }
 
-    // 已登录状态的页面路由
     if (currentPage === 'user') {
         return <UserPage onBack={() => setCurrentPage('todo')} />;
     }

@@ -16,7 +16,6 @@ function RegisterPage({ onRegisterSuccess, onNavigateLogin, onBack }) {
             return;
         }
 
-        // 密码验证
         if (password.length < 8) {
             setMessage('パスワードは8文字以上である必要があります');
             return;
@@ -41,7 +40,6 @@ function RegisterPage({ onRegisterSuccess, onNavigateLogin, onBack }) {
             
             if (error.response) {
                 if (error.response.status === 422) {
-                    // Pydantic验证错误
                     const detail = error.response.data?.detail;
                     if (Array.isArray(detail) && detail.length > 0) {
                         setMessage(detail[0].msg || '入力エラー');

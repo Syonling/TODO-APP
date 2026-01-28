@@ -4,8 +4,8 @@ import { designConfig as ds } from '../styles/design-config';
 
 function UserPage({ onBack }) {
     const [currentUsername, setCurrentUsername] = useState('');
-    const [newUsername, setNewUsername] = useState('');      // ← 保持空白
-    const [newPassword, setNewPassword] = useState('');      // ← 保持空白
+    const [newUsername, setNewUsername] = useState('');     
+    const [newPassword, setNewPassword] = useState('');     
     const [message, setMessage] = useState('');
 
     useEffect(() => {
@@ -16,7 +16,6 @@ function UserPage({ onBack }) {
         try {
             const response = await getCurrentUser();
             setCurrentUsername(response.data.username);
-            // 不设置 newUsername，让输入框保持空白
         } catch (error) {
             console.error('読み込み失敗', error);
         }
@@ -26,11 +25,10 @@ function UserPage({ onBack }) {
         e.preventDefault();
         setMessage('');
 
-        // 判断是否有输入内容
         const hasNewUsername = newUsername.trim().length > 0;
         const hasNewPassword = newPassword.trim().length > 0;
         
-        // 前端基础验证
+        // フロントエンドの基本検証
         if (!hasNewUsername && !hasNewPassword) {
             setMessage('変更する内容を入力してください');
             return;
@@ -42,11 +40,11 @@ function UserPage({ onBack }) {
                 hasNewPassword ? newPassword : null
             );
             setMessage('更新しました！');
-            setNewUsername('');  // 清空输入框
-            setNewPassword('');  // 清空输入框
+            setNewUsername('');  // 入力クリア
+            setNewPassword('');  // 入力クリア
             loadUserInfo();
         } catch (error) {
-            // 显示后端返回的详细错误信息
+            // バックエンドから返された詳細なエラー情報を表示
             if (error.response?.data?.detail) {
                 setMessage(error.response.data.detail);
             } else if (error.request) {
@@ -139,7 +137,7 @@ function UserPage({ onBack }) {
                         type="text"
                         value={newUsername}
                         onChange={(e) => setNewUsername(e.target.value)}
-                        placeholder="新しいユーザー名を入力してください"
+                        placeholder=""
                         style={{ 
                             width: '100%', 
                             padding: ds.input.padding,
@@ -163,7 +161,7 @@ function UserPage({ onBack }) {
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="パスワード（8文字以上、英数字を含む）"
+                        placeholder="8文字以上、英数字を含む"
                         style={{ 
                             width: '100%', 
                             padding: ds.input.padding,

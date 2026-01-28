@@ -1,6 +1,3 @@
-"""
-统一管理配置，方便切换环境
-"""
 import os
 
 class Settings:

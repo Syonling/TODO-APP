@@ -26,12 +26,12 @@ def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
     db: Session = Depends(get_db)
 ):
-    """获取当前登录用户（强制认证）"""
+    """Get the currently logged-in user (mandatory authentication)"""
     from app import models
     
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="未授权，请先登录",
+        detail="権限がありません。まずログインしてください",
         headers={"WWW-Authenticate": "Bearer"},
     )
     
