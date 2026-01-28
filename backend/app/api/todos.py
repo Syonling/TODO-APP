@@ -1,5 +1,5 @@
 """
-Todo的增删改查，CRUD
+Todo の CRUD 機能 「Create（生成）」「Read（読み取り）」「Update（更新）」「Delete（削除）」
 """
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
@@ -17,7 +17,7 @@ def get_todos(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """获取Todo列表（支持排序）"""
+    """ToDo 項目のリストを取得します"""
     query = db.query(models.Todo).filter(models.Todo.user_id == current_user.id)
     
     # 排序
@@ -42,7 +42,7 @@ def create_todo(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """创建Todo"""
+    """Create Todo"""
     db_todo = models.Todo(
         title=todo.title,
         due_date=todo.due_date,
@@ -62,16 +62,16 @@ def update_todo(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """更新Todo"""
+    """Update Todo"""
     todo = db.query(models.Todo).filter(
         models.Todo.id == todo_id,
         models.Todo.user_id == current_user.id
     ).first()
     
     if not todo:
-        raise HTTPException(status_code=404, detail="Todo不存在")
+        raise HTTPException(status_code=404, detail="Todoがありません")
     
-    # 更新字段
+    # Update
     if todo_update.title is not None:
         todo.title = todo_update.title
     if todo_update.due_date is not None:
@@ -89,14 +89,14 @@ def toggle_todo(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """切换完成状态"""
+    """完了ステータスへの切り替え"""
     todo = db.query(models.Todo).filter(
         models.Todo.id == todo_id,
         models.Todo.user_id == current_user.id
     ).first()
     
     if not todo:
-        raise HTTPException(status_code=404, detail="Todo不存在")
+        raise HTTPException(status_code=404, detail="Todoがありません")
     
     todo.completed = not todo.completed
     db.commit()
@@ -109,14 +109,14 @@ def delete_todo(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """删除Todo"""
+    """Delete Todo"""
     todo = db.query(models.Todo).filter(
         models.Todo.id == todo_id,
         models.Todo.user_id == current_user.id
     ).first()
     
     if not todo:
-        raise HTTPException(status_code=404, detail="Todo不存在")
+        raise HTTPException(status_code=404, detail="Todoがありません")
     
     db.delete(todo)
     db.commit()
