@@ -19,7 +19,6 @@
 - [技術スタック](#技術スタック)
 - [プロジェクト構成](#プロジェクト構成)
 - [API仕様](#api仕様)
-- [データベース設計](#データベース設計)
 - [設計上の工夫](#設計上の工夫)
 
 ---
@@ -334,39 +333,6 @@ TODO-APP/
 | PATCH | `/api/todos/{todo_id}/toggle` | 完了状態切り替え | 必要 |
 | DELETE | `/api/todos/{todo_id}` | Todo削除 | 必要 |
 
-#### クエリパラメータ
-
-**GET /api/todos**
-- `sort`: `date` または `priority`
-- `order`: `asc`（昇順）または `desc`（降順）
-
----
-
-## データベース設計
-
-### usersテーブル
-
-| カラム名 | 型 | 制約 | 説明 |
-|---------|---|------|-----|
-| id | INTEGER | PRIMARY KEY | ユーザーID |
-| username | VARCHAR(50) | UNIQUE, NOT NULL | ユーザー名 |
-| password_hash | VARCHAR(255) | NOT NULL | パスワード（Argon2暗号化） |
-| created_at | TIMESTAMP | DEFAULT NOW() | 作成日時 |
-| updated_at | TIMESTAMP | DEFAULT NOW() | 更新日時 |
-
-### todosテーブル
-
-| カラム名 | 型 | 制約 | 説明 |
-|---------|---|------|-----|
-| id | INTEGER | PRIMARY KEY | TodoID |
-| user_id | INTEGER | FOREIGN KEY, NOT NULL | ユーザーID |
-| title | VARCHAR(200) | NOT NULL | Todoタイトル |
-| due_date | DATE | NOT NULL | 期日 |
-| priority | INTEGER | NOT NULL, CHECK(1-3) | 優先度（1:低、2:中、3:高）|
-| completed | BOOLEAN | DEFAULT FALSE | 完了フラグ |
-| created_at | TIMESTAMP | DEFAULT NOW() | 作成日時 |
-| updated_at | TIMESTAMP | DEFAULT NOW() | 更新日時 |
-
 ---
 
 ## 設計上の工夫
@@ -378,7 +344,6 @@ TODO-APP/
   - 確認ダイアログによる誤操作防止
   - ドロップダウンメニューによる直感的な操作
   - タスク統計のリアルタイム表示
-- **レスポンシブデザイン**: モバイル・タブレット対応
 
 ### バックエンド
 
