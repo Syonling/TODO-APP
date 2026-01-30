@@ -50,11 +50,13 @@ cd TODO-APP
 # 2. Dockerコンテナを起動
 docker compose up -d
 
-# 3. 起動完了を待つ（約30秒）
+# 3. 起動完了を待つ
 # データベースの初期化とバックエンドの起動を待機
 
 # 4. ブラウザでアクセス
-open http://localhost:3001
+# 起動後、以下のURLをブラウザで開いてください：
+http://localhost:3001
+
 ```
 
 #### 方法2: ローカルビルド環境
@@ -70,7 +72,8 @@ docker compose -f docker-compose.local.yml up -d
 # 3. 起動完了を待つ（初回は数分かかる場合があります）
 
 # 4. ブラウザでアクセス
-open http://localhost:3001
+# 起動後、以下のURLをブラウザで開いてください：
+http://localhost:3001
 ```
 
 ### 起動確認
